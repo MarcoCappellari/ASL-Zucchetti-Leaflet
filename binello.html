@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WHERE</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+    <style>
+        body {
+            transition: background-color .5s;
+            background-color: #e6e6e6;
+            color: #ff6600;
+            font-size: 20px;
+        }
+
+        h1 {
+            color: #00cccc;
+        }
+
+        .dark-mode {
+            background-color: #262325;
+            color: #ff0066;
+        }
+
+        #button {
+            position: absolute;
+            top: 20px;
+            left: 49px;
+            font-size: 90px;
+            cursor: pointer;
+        }
+
+        .modalità-ellen {
+            font-size: 50px;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: black;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #00cccc;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: #008080;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+
+        @media screen and (max-height: 440px) {
+            .sidenav {
+                padding-top: 17px;
+            }
+
+            .sidenav a {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+
+        <h1><img src="LENTE.png" width="200" height="200"><img src="titoloblu.png"></h1>
+
+        <p>Benvenuto in WHERE!</p>
+        <p>Hai la possibilita' di scegliere tra una serie di punti gia prestabiliti presso l'istituto
+            Einaudi-Gramsci, sede Gramsci.</p>
+        <p>Dopo aver selezionato i punti hai la possibilita' di visualizzarli sulla mappa cliccando sul menu' a
+            tendita => voce "vai alla Mappa"</p>
+        <div id="mapid"></div>
+        <span onclick="openNav()" id="button">&#9776;</span>
+    </div>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#" onclick="myFunction()">Modalita' notturna</a>
+        <a href="#" onclick="jescolo()">Ingrandisci caratteri</a>
+        <a href="#" onclick="inserisci()">Inserisci punti</a>
+        <a href="#" onclick="vaiMappa()">Vai alla mappa</a>
+    </div>
+
+    <script>
+        function myFunction() {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+        }
+
+        function jescolo() {
+            var element = document.body;
+            element.classList.toggle("modalità-ellen");
+        }
+
+        function inserisci() {
+            location.href = 'gruppo5_zucchetti.html';
+        }
+
+        function vaiMappa() {
+            location.href = 'Mappe.html';
+        }
+
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
+    </script>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3psW6F5EaSFfltvCNK39caxcyoTDZNPT2y17Hj9QI/1+AVlNuyFk0Ywxn3ijustdS4FZry5ozI8Nahw=="
+        crossorigin=""></script>
+    <!-- Include your Leaflet map script here -->
+</body>
+
+</html>

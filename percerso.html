@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geolocalization</title>
+    <!-- documentazione: https://leafletjs.com/examples/quick-start/ -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+      integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+      crossorigin=""
+    ></script>
+    <style>
+      #mapid {
+        height: 600px;
+      }
+      .my-div-icon {
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- div id="result"></div --> 
+    <div id="mapid"></div>
+      
+ 
+   <button onclick="GetPointFromFile()">Get Points From File</button> 
+   <button onclick="AddMarker()">Add Marker</button>
+    <button onclick="AddMarker2()">Add Marker With Icon</button>
+    <button onclick="AddPoly()">Add Polyline</button>    
+    <button onclick="Centering()">Centering</button>
+    <button onclick="AddClick()">Add Click</button>
+    <div id="log"></div>
+  </body>
+</html>
+
+<script>
+	 var result = document.getElementById("result");
+  /**
+   * Lettura del contenuto del file.txt:
+   *   sintassi attesa lat|long
+   */
+ // function GetPointFromFile(){
+ // faccio leggere il file senza bottone
+    fetch("gruppo5_zucchetti.txt")
+    .then( xhr => xhr.text())
+    .then ( text => {
+      var coordinate = text.split("\n").map( pair => { return pair.split("|"); });
+      start(coordinate);
+    })
+    .catch(error => { console.error("Error:" +error)})
+ // }
+  function start(coordinate) {
+      /**
+       * Ora ho un array con le coordinate [ [latitude1, longitude1], [latiture2, longitude2], ...... ]
+       */
+      for(var i=0; i<coordinate.length; i++){
+
+      /* result.innerHTML += coordinate[i][0] + " - " + coordinate[i][1] + "<br>";*/
+        var marker1 = L.marker([coordinate[i][0],coordinate[i][1]]);
+   		 marker1.addTo(map);
+        //* manipolazione dei dati 
+      var polyline_options = {
+      color: "red",
+      weight: 2
+    };
+  
+
+    polyline = L.polyline(coordinate, polyline_options);
+    polyline.addTo(map);
+      }
+    }
+  /* Istanzio la mappa
+   * documentazione: https://leafletjs.com/reference-1.6.0.html#map-example
+   */
+  
+  var map = L.map("mapid");
+
+  /* Imposto le coordinate della mappa
+   */
+ // map.setView([45.3967, 11.893], 15);
+ map.locate({setView: true, maxZoom: 16}); 
+  /* Creo il tile che visualizza la mappa utilizzando le immagini di OpenStreetMap.org
+   * documentazione: https://leafletjs.com/reference-1.6.0.html#tilelayer
+   */
+  var tileLayer = L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      attribution:
+        '<a href="https://www.openstreetmap.org/">© OpenStreetMap contributors</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+    }
+  );
+  tileLayer.addTo(map);
+  
+  // provo posizione con cerchio
+  function onLocationFound(e) {
+    var radius = e.accuracy;
+
+    L.marker(e.latlng).addTo(map)
+        .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+    L.circle(e.latlng, radius).addTo(map);
+}
+
+map.on('locationfound', onLocationFound);
+
+// qui finisce
+  /* Imposto un marker alle mie coordinate attuali
+   * documentazione: https://leafletjs.com/reference-1.6.0.html#marker
+   */
+  function AddMarker(){
+		for(var i=0; i<coordinate.length; i++){
+				var marker1 = L.marker([coordinate[i][0], coordinate[i][1]]);
+				marker1.addTo(map);
+		}
+  }
+  /* Imposto un icona al marker
+   */
+  function AddMarker2() {
+
+    var myIcon = L.icon({
+      iconUrl: "images/my-icon.svg",
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+      popupAnchor: [-3, -76]
+      // shadowUrl: 'my-icon-shadow.png',
+      // shadowSize: [68, 95],
+      // shadowAnchor: [22, 94]
+    }); 
+
+    var marker2 = L.marker([45.409, 11.876], { icon: myIcon });
+    marker2.addTo(map);
+ 
+  }
+  /* Disegno una linea:
+  *  ogni punto ha una lat e lng 
+  */
+  var polyline;
+  function AddPoly() {
+    
+    var latlngs = [
+      [45.408, 11.874],
+      [45.408, 11.875],
+      [45.409, 11.876]
+    ];
+
+    /* Posso personalizzare la linea 
+    */
+    var polyline_options = {
+      color: "red",
+      weight: 2
+    };
+  
+
+    polyline = L.polyline(latlngs, polyline_options);
+    polyline.addTo(map);
+
+  }
+
+  /* Centro la mappa sulla linea */
+  function Centering() {
+    if( polyline ) {
+      map.fitBounds(polyline.getBounds()); 
+    }
+  }
+
+  /* Interazioni con la mappa tramite eventi
+  * documentazione: https://leafletjs.com/reference-1.6.0.html#mouseevent
+  */
+  function AddClick() {
+    map.on('click', function(ev) {
+      alert(ev.latlng); // ev is an event object (MouseEvent in this case)
+      document.getElementById("log").innerHTML += ev.latlng + "\n";
+    });
+  }
+</script>

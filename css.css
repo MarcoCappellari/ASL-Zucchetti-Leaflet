@@ -1,0 +1,56 @@
+html,
+body {
+    margin-left: .5cm;
+    margin-right: .5cm;
+    color: #ff6600;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 10pt;
+}
+
+p {
+    color: rgb(0, 0, 255);
+    text-align: center;
+    text-indent: 24px;
+
+
+}
+
+h1 {
+    color: #00ccff;
+    text-align: center;
+    text-indent: 12px;
+}
+
+@media only screen and (orientation:portrait) and (min-width:321px) {
+
+    html,
+    body {
+        width: 320px;
+        min-width: 310px;
+        margin: 0px;
+        overflow-x: hidden;
+    }
+
+    #page {
+        width: 320px;
+        min-width: 310px;
+        margin: 0px;
+    }
+}
+
+@media only screen and (orientation:portrait) and (min-width:481px) {
+
+    html,
+    body {
+        width: 480px;
+        min-width: 470px;
+        margin: 0px;
+        overflow-x: hidden;
+    }
+
+    #page {
+        width: 480px;
+        min-width: 470px;
+        margin: 0px;
+    }
+}
