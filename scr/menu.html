@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WHERE</title>
+    <link rel="stylesheet" type="text/css" href="css.css" />
+</head>
+
+<body>
+    <main>
+
+        <h1><img src="../scr/img/logo.png" width="200" height="200"><img src="../scr/img/titolo.png"></h1>
+
+        <h2>Benvenuto su WHERE!</h2>
+        <p>Qui puoi scoprire la vasta gamma di punti d'interesse all'interno della nostra sede, Gramsci.</p> 
+        <p>Per iniziare, visita la sezione "Inserisci Punti" e seleziona i luoghi che ti interessano. 
+        </p><p>Poi, fai clic sul menu a tendina per selezionare "Vai alla Mappa" e 
+            visualizzare i punti scelti.</p>
+        <p>Scopri la nostra scuola in modo interattivo e intuitivo con la nostra app.</p> 
+        <h3>Buona esplorazione!</h3>
+        <div id="mapid"></div>
+        <span onclick="openNav()" id="button">&#9776;</span>
+    </main>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#" onclick="myFunction()">Modalita' notturna</a>
+        <a href="#" onclick="jescolo()">Ingrandisci caratteri</a>
+        <a href="#" onclick="inserisci()">Inserisci punti</a>
+        <a href="#" onclick="vaiMappa()">Vai alla mappa</a>
+    </div>
+
+    <script>
+        function myFunction() {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+        }
+
+        function jescolo() {
+            var element = document.body;
+            element.classList.toggle("modalità-ellen");
+        }
+
+        function inserisci() {
+            location.href = 'gruppo5_zucchetti.html';
+        }
+
+        function vaiMappa() {
+            location.href = 'Mappe.html';
+        }
+
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
+    </script>
+</body>
+
+</html>
